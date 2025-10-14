@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastro - Receitas Gourmet</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    body {
+      background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .cadastro-container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #3e3e3e;
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    input.form-control {
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 16px;
+    }
+
+    button.btn-cadastrar {
+      width: 100%;
+      padding: 12px;
+      background-color: #8B4513;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button.btn-cadastrar:hover {
+      background-color: #5c3310;
+    }
+
+    .cadastro-link {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .cadastro-link a {
+      color: #8B4513;
+      text-decoration: none;
+    }
+
+    .cadastro-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="cadastro-container">
+    <h3 class="titulo">Cadastro Receitas Gourmet</h3>
+
+    <form id="formCadastro" method="POST" action="#">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome Completo</label>
+        <input type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome completo" required autofocus />
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="seuemail@exemplo.com" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <input type="password" class="form-control" id="senha" name="senha" placeholder="Crie uma senha" required minlength="6" />
+      </div>
+
+      <div class="mb-3">
+        <label for="confirmar" class="form-label">Confirmar Senha</label>
+        <input type="password" class="form-control" id="confirmar" name="confirmar" placeholder="Repita a senha" required minlength="6" />
+      </div>
+
+      <button type="submit" class="btn-cadastrar">Cadastrar</button>
+    </form>
+
+    <p class="cadastro-link mt-3">
+      Já tem conta?
+      <a href="login.html">Faça login</a>
+    </p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.getElementById('formCadastro').addEventListener('submit', function (event) {
+      const senha = document.getElementById('senha').value;
+      const confirmar = document.getElementById('confirmar').value;
+
+      if (senha !== confirmar) {
+        event.preventDefault();
+        alert('As senhas não coincidem. Por favor, corrija.');
+        document.getElementById('confirmar').focus();
+      }
+    });
+  </script>
+</body>
+</html>
