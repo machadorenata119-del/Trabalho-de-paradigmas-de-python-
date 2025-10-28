@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Receita - Receitas Gourmet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    body {
+      background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .form-container h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #3e3e3e;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #8B4513;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #5c3310;
+    }
+
+    .back-link {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .back-link a {
+      color: #8B4513;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h1>Adicionar Nova Receita</h1>
+    <form id="form-receita">
+      <div class="form-group">
+        <label for="nome">Nome da Receita:</label>
+        <input type="text" id="nome" name="nome" required placeholder="Ex: Bolo de Chocolate">
+      </div>
+
+      <div class="form-group">
+        <label for="ingredientes">Ingredientes:</label>
+        <textarea id="ingredientes" name="ingredientes" required placeholder="Liste os ingredientes necessários..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="preparo">Modo de Preparo:</label>
+        <textarea id="preparo" name="preparo" required placeholder="Descreva o modo de preparo passo a passo..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="tempo">Tempo de Preparo (minutos):</label>
+        <input type="text" id="tempo" name="tempo" placeholder="Ex: 45">
+      </div>
+
+      <button type="submit">Salvar Receita</button>
+    </form>
+
+    <div class="back-link">
+      <p><a href="receitas.html">← Voltar para receitas</a></p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('form-receita');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById('nome').value;
+      const ingredientes = document.getElementById('ingredientes').value;
+      const preparo = document.getElementById('preparo').value;
+      const tempo = document.getElementById('tempo').value;
+
+      console.log("Receita criada:");
+      console.log("Nome:", nome);
+      console.log("Ingredientes:", ingredientes);
+      console.log("Modo de preparo:", preparo);
+      console.log("Tempo:", tempo);
+
+      alert("Receita salva com sucesso!");
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
