@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Receitas Gourmet</title>
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+        background: #fff8f0;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #ff914d;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    main {
+        max-width: 800px;
+        margin: 30px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+        color: #ff914d;
+        margin-bottom: 10px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    input, textarea, button {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+        font-family: inherit;
+    }
+    button {
+        background-color: #ff914d;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+        background-color: #ff7b00;
+    }
+    .card {
+        background-color: #fff5eb;
+        border-left: 5px solid #ff914d;
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    .card h3 {
+        margin: 0;
+        color: #333;
+    }
+    .card p {
+        margin: 5px 0;
+    }
+    .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .edit {
+        background: #ffd966;
+        color: #333;
+    }
+    .delete {
+        background: #ff4d4d;
+    }
+</style>
+</head>
+<body>
+
+<header>🍽️ Receitas Gourmet</header>
+
+<main>
+    <h2>Cadastrar Receita</h2>
+    <form id="recipeForm">
+        <input type="hidden" id="editIndex">
+        <input type="text" id="titulo" placeholder="Título da receita" required>
+        <textarea id="descricao" rows="3" placeholder="Descrição da receita" required></textarea>
+        <button type="submit">Salvar Receita</button>
+    </form>
+
+    <h2>Lista de Receitas</h2>
+    <div id="listaReceitas"></div>
+</main>
+
+<script>
+    let receitas = [
+        { titulo: "Lasanha de Frango", descricao: "Camadas de massa, frango desfiado, molho branco e queijo derretido." },
+        { titulo: "Bolo de Chocolate", descricao: "Fofinho e molhadinho, coberto com calda cremosa de chocolate." },
+        { titulo: "Risoto de Camarão", descricao: "Arroz arbório cremoso com camarões salteados e toque de limão." }
+    ];
+
+    const lista = document.getElementById("listaReceitas");
+    const form = document.getElementById("recipeForm");
+    const titulo = document.getElementById("titulo");
+    const descricao = document.getElementById("descricao");
+    const editIndex = document.getElementById("editIndex");
+
+    function renderizar() {
+        lista.innerHTML = "";
+        receitas.forEach((r, i) => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <h3>${r.titulo}</h3>
+                <p>${r.descricao}</p>
+                <div class="actions">
+                    <button class="edit" onclick="editar(${i})">Editar</button>
+                    <button class="delete" onclick="excluir(${i})">Excluir</button>
+                </div>
+            `;
+            lista.appendChild(card);
+        });
+    }
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const nova = { titulo: titulo.value, descricao: descricao.value };
+
+        if (editIndex.value) {
+            receitas[editIndex.value] = nova;
+            editIndex.value = "";
+        } else {
+            receitas.push(nova);
+        }
+
+        form.reset();
+        renderizar();
+    });
+
+    function editar(i) {
+        titulo.value = receitas[i].titulo;
+        descricao.value = receitas[i].descricao;
+        editIndex.value = i;
+    }
+
+    function excluir(i) {
+        if (confirm("Tem certeza que deseja excluir esta receita?")) {
+            receitas.splice(i, 1);
+            renderizar();
+        }
+    }
+
+    renderizar();
+</script>
+
+</body>
+</html>
