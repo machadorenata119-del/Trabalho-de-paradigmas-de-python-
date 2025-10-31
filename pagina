@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receitas Gourmet</title>
+    <style>
+        /* ======= ESTILO GERAL ======= */
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: "Poppins", Arial, sans-serif;
+            margin: 0;
+            background-color: #faf8f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #2e2e2e;
+            color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: "Playfair Display", serif;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+        }
+
+        nav button {
+            background-color: #ffb347;
+            color: #2e2e2e;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        nav button:hover { background-color: #ffc970; }
+
+        main {
+            padding: 30px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        /* ======= RECEITAS ======= */
+        .receita {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .receita:hover { transform: translateY(-3px); }
+
+        .receita h2 { color: #ff7a00; margin-top: 0; }
+
+        .delete-btn, .edit-btn {
+            position: absolute;
+            top: 15px;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background 0.3s;
+        }
+
+        .delete-btn {
+            right: 15px;
+            background-color: #ff5b5b;
+            color: white;
+        }
+
+        .delete-btn:hover { background-color: #d64040; }
+
+        .edit-btn {
+            right: 70px;
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .edit-btn:hover { background-color: #45a049; }
+
+        /* ======= MODAIS ======= */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 5;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            width: 350px;
+            max-width: 90%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            text-align: center;
+            color: #ff7a00;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: inherit;
+        }
+
+        .modal-content button {
+            background-color: #ff7a00;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .modal-content button:hover { background-color: #e46a00; }
+
+        .close-btn {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .close-btn:hover { color: #ff7a00; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🍽️ Receitas Gourmet</h1>
+        <nav>
+            <button id="loginBtn">Login</button>
+            <button id="cadastroBtn">Cadastro</button>
+            <button id="adicionarBtn">Adicionar Receita</button>
+        </nav>
+    </header>
+
+    <main id="lista-receitas">
+        <div class="receita">
+            <button class="delete-btn">Excluir</button>
+            <button class="edit-btn">Editar</button>
+            <h2>Risoto de Cogumelos</h2>
+            <p><strong>Tempo de preparo:</strong> 45 minutos</p>
+            <p><strong>Ingredientes:</strong><br>
+            Arroz arbório, cogumelos frescos, manteiga, cebola, vinho branco, caldo de legumes e parmesão.</p>
+            <p><strong>Modo de preparo:</strong><br>
+            Refogue a cebola na manteiga, adicione o arroz, o vinho e o caldo aos poucos até cozinhar. Misture os cogumelos e finalize com parmesão.</p>
+        </div>
+    </main>
+
+    <!-- Modal de adicionar receita -->
+    <div class="modal" id="modalReceita">
+        <div class="modal-content">
+            <button class="close-btn" onclick="fecharModal('modalReceita')">&times;</button>
+            <h3>Adicionar Nova Receita</h3>
+            <input type="text" id="titulo" placeholder="Título da receita">
+            <input type="text" id="tempo" placeholder="Tempo de preparo">
+            <textarea id="ingredientes" placeholder="Ingredientes (um por linha)"></textarea>
+            <textarea id="modo" placeholder="Modo de preparo"></textarea>
+            <button id="salvarReceita">Salvar Receita</button>
+        </div>
+    </div>
+
+    <!-- Modal de login -->
+    <div class="modal" id="modalLogin">
+        <div class="modal-content">
+            <button class="close-btn" onclick="fecharModal('modalLogin')">&times;</button>
+            <h3>Entrar</h3>
+            <input type="email" id="loginEmail" placeholder="E-mail">
+            <input type="password" id="loginSenha" placeholder="Senha">
+            <button onclick="alert('Login efetuado com sucesso!')">Entrar</button>
+        </div>
+    </div>
+
+    <!-- Modal de cadastro -->
+    <div class="modal" id="modalCadastro">
+        <div class="modal-content">
+            <button class="close-btn" onclick="fecharModal('modalCadastro')">&times;</button>
+            <h3>Criar Conta</h3>
+            <input type="text" id="cadastroNome" placeholder="Nome completo">
+            <input type="email" id="cadastroEmail" placeholder="E-mail">
+            <input type="password" id="cadastroSenha" placeholder="Senha">
+            <button onclick="alert('Cadastro realizado com sucesso!')">Cadastrar</button>
+        </div>
+    </div>
+
+    <script>
+        const modalReceita = document.getElementById('modalReceita');
+        const modalLogin = document.getElementById('modalLogin');
+        const modalCadastro = document.getElementById('modalCadastro');
+        const listaReceitas = document.getElementById('lista-receitas');
+
+        let receitaAtual = null;
+
+        // Botões principais
+        document.getElementById('adicionarBtn').onclick = () => {
+            receitaAtual = null; // Nova receita
+            modalReceita.style.display = 'flex';
+        };
+        document.getElementById('loginBtn').onclick = () => modalLogin.style.display = 'flex';
+        document.getElementById('cadastroBtn').onclick = () => modalCadastro.style.display = 'flex';
+
+        // Função para editar receita
+        function editarReceita(receita) {
+            receitaAtual = receita;
+            document.getElementById('titulo').value = receita.querySelector('h2').innerText;
+            document.getElementById('tempo').value = receita.querySelector('p:nth-of-type(1)').innerText.replace('Tempo de preparo: ', '');
+            document.getElementById('ingredientes').value = receita.querySelector('p:nth-of-type(2)').innerHTML.replace(/<br>/g, '\n').replace('<strong>Ingredientes:</strong>\n', '');
+            document.getElementById('modo').value = receita.querySelector('p:nth-of-type(3)').innerHTML.replace(/<br>/g, '\n').replace('<strong>Modo de preparo:</strong>\n', '');
+            modalReceita.style.display = 'flex';
+        }
+
+        // Salvar ou atualizar receita
+        document.getElementById('salvarReceita').onclick = () => {
+            const titulo = document.getElementById('titulo').value.trim();
+            const tempo = document.getElementById('tempo').value.trim();
+            const ingredientes = document.getElementById('ingredientes').value.trim();
+            const modo = document.getElementById('modo').value.trim();
+
+            if (!titulo || !tempo || !ingredientes || !modo) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            if (receitaAtual) {
+                // Atualiza receita existente
+                receitaAtual.querySelector('h2').innerText = titulo;
+                receitaAtual.querySelector('p:nth-of-type(1)').innerHTML = `<strong>Tempo de preparo:</strong> ${tempo}`;
+                receitaAtual.querySelector('p:nth-of-type(2)').innerHTML = `<strong>Ingredientes:</strong><br>${ingredientes.replace(/\n/g, '<br>')}`;
+                receitaAtual.querySelector('p:nth-of-type(3)').innerHTML = `<strong>Modo de preparo:</strong><br>${modo}`;
+                receitaAtual = null;
+            } else {
+                // Cria nova receita
+                const nova = document.createElement('div');
+                nova.classList.add('receita');
+                nova.innerHTML = `
+                    <button class="delete-btn">Excluir</button>
+                    <button class="edit-btn">Editar</button>
+                    <h2>${titulo}</h2>
+                    <p><strong>Tempo de preparo:</strong> ${tempo}</p>
+                    <p><strong>Ingredientes:</strong><br>${ingredientes.replace(/\n/g, '<br>')}</p>
+                    <p><strong>Modo de preparo:</strong><br>${modo}</p>
+                `;
+                nova.querySelector('.delete-btn').onclick = () => nova.remove();
+                nova.querySelector('.edit-btn').onclick = () => editarReceita(nova);
+                listaReceitas.appendChild(nova);
+            }
+
+            fecharModal('modalReceita');
+            document.getElementById('titulo').value = '';
+            document.getElementById('tempo').value = '';
+            document.getElementById('ingredientes').value = '';
+            document.getElementById('modo').value = '';
+        };
+
+        // Fechar modais
+        function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
+        window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.style.display = 'none'; };
+
+        // Inicializa botões de delete e edit existentes
+        document.querySelectorAll('.receita').forEach(r => {
+            r.querySelector('.delete-btn').onclick = () => r.remove();
+            r.querySelector('.edit-btn').onclick = () => editarReceita(r);
+        });
+    </script>
+</body>
+</html>
