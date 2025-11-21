@@ -19,7 +19,8 @@ Renata da Conceição Machado
 
 🎯 Objetivo
 
-Criar uma plataforma funcional, agradável e útil para gestão de receitas culinárias, facilitando o cadastro, consulta e organização de pratos.
+
+Criar uma plataforma funcional e agradável para gestão de receitas, facilitando o acesso e o cadastro de novas criações culinárias, incentivando organização e compartilhamento gastronômico.
 
 
 ---
@@ -31,6 +32,7 @@ Criar uma plataforma funcional, agradável e útil para gestão de receitas culi
 ✔️ Edição e exclusão de receitas
 
 ✔️ Lista completa de receitas cadastradas
+
 
 
 
